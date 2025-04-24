@@ -1,0 +1,8 @@
+﻿Key,Value,Description
+Worker_HirePrice,500,Giá thuê mỗi công nhân (đồng vàng)
+Worker_ActionTimeSeconds,120,Thời gian mỗi hành động của công nhân (giây)
+Equipment_UpgradePrice,500,Giá mỗi lần nâng cấp thiết bị (đồng vàng)
+Equipment_UpgradeEffectRate,0.1,Mức tăng năng suất mỗi lần nâng cấp 0.1 = 10%
+Land_ExpansionPrice,500,Giá mở rộng mỗi mảnh đất (đồng vàng)
+Game_Goal_Gold,1000000,Mục tiêu vàng để chiến thắng
+LastYield_ExpirationSeconds,3600,Thời gian tồn tại sau lần thu hoạch cuối (giây)

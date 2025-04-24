@@ -1,0 +1,6 @@
+﻿Id,Name,Type,HarvestableId
+Mã định danh,Tên sản phẩm (Ví dụ: Hạt giống Cà chua),"Loại (1: Cây, 2: Vật nuôi)",Mã cây trồng/vật nuôi
+1,Hạt giống Cà chua,1,1
+2,Hạt giống Việt quất,1,2
+3,Hạt giống Dâu tây,1,3
+4,Giống Bò,2,4

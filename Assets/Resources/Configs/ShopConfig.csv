@@ -1,0 +1,6 @@
+﻿Id,SeedAnimalId,BuyUnit,BuyPrice
+Mã định danh,Mã cây giống/vật nuôi giống,Số lượng nhận khi mua trong 1 đơn vị,Giá mua
+1,1,1,30
+2,2,1,50
+3,3,10,400
+4,4,1,100

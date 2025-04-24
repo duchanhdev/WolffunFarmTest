@@ -1,0 +1,6 @@
+﻿Id,Tên cây/con vật,Type,YieldTime,YieldCount,MaxYield,ProductId
+Mã định danh,Tên cây/con vật,Loại (Cây/Vật nuôi),Thời gian ra sản phẩm (giây),Số lượng sản phẩm mỗi lần,Tổng sản phẩm cả vòng đời,Mã sản phẩm
+1,Cà chua,1,600,1,40,1
+2,Việt quất,1,900,1,40,2
+3,Dâu tây,1,300,1,20,3
+4,Bò sữa,2,1800,1,100,4

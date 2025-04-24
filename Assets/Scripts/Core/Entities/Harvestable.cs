@@ -1,19 +1,21 @@
 ﻿using System;
+using Configs;
 using Core.Data;
+using Data.Configs;
 
 namespace Core.Entities
 {
     public class Harvestable
     {
         protected HarvestableData _data;
-        protected HarvestableTypeData _typeData;
+        protected HarvestableConfig.RowData _typeData;
         public int Id => _data.Id;
         public int Type => _data.Type;
         public string Name => _typeData.Name;
-        public int TotalYield => _typeData.TotalYield;
+        public int MaxYield => _typeData.MaxYield;
         public int ProducedCount => _data.ProducedCount;
         public int PendingProducts => _data.PendingProducts;
-        public float TimeToNextYield => _typeData.TimeToNextYield;
+        public float YieldTime => _typeData.YieldTime;
         public float TimeSinceLastYield => _data.TimeSinceLastYield;
         public DateTime LastProduceTime => _data.LastProduceTime;
         public bool IsDead => _data.IsDead;
@@ -23,23 +25,24 @@ namespace Core.Entities
         public Harvestable(HarvestableData data)
         {
             _data = data;
+            _typeData = GameManager.Instance.Configs.HarvestableConfig.FindById(data.Type);
         }
 
         public void Produce()
         {
             if (IsDead) return;
 
-            if (ProducedCount < TotalYield)
+            if (ProducedCount < MaxYield)
             {
-                int count = (int)(TimeSinceLastYield / TimeToNextYield);
-                if (count > TotalYield - ProducedCount) count = TotalYield - ProducedCount;
+                int count = (int)(TimeSinceLastYield / YieldTime);
+                if (count > MaxYield - ProducedCount) count = MaxYield - ProducedCount;
                 _data.ProducedCount+=count;
                 _data.PendingProducts+=count;
-                _data.LastProduceTime = LastProduceTime.AddSeconds(count * TimeToNextYield);
+                _data.LastProduceTime = LastProduceTime.AddSeconds(count * YieldTime);
                 _data.TimeSinceLastYield = 0;
             }
 
-            if (ProducedCount >= TotalYield && DateTime.Now.Subtract(LastProduceTime).TotalSeconds >= HarvestWindowDuration)
+            if (ProducedCount >= MaxYield && DateTime.Now.Subtract(LastProduceTime).TotalSeconds >= HarvestWindowDuration)
             {
                 _data.IsDead = true;
                 _data.PendingProducts = 0;
@@ -66,8 +69,8 @@ namespace Core.Entities
 
             _data.TimeSinceLastYield += deltaTime;
 
-            if (TimeSinceLastYield >= TimeToNextYield || 
-                (ProducedCount >= TotalYield && DateTime.Now.Subtract(LastProduceTime).TotalSeconds >= HarvestWindowDuration))
+            if (TimeSinceLastYield >= YieldTime || 
+                (ProducedCount >= MaxYield && DateTime.Now.Subtract(LastProduceTime).TotalSeconds >= HarvestWindowDuration))
             {
                 Produce();
             }
