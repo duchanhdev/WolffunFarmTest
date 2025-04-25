@@ -1,5 +1,4 @@
 ﻿using Configs;
-using UnityEngine;
 
 namespace Data.Configs
 {

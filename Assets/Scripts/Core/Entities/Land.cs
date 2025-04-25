@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Threading;
 using Data.Configs;
-using DG.Tweening;
 
 namespace Core.Entities
 {
@@ -18,6 +18,7 @@ namespace Core.Entities
         public string HarvestableId { get; private set; }
         public int HarvestableType { get; private set; }
         public DateTime GrowTime;
+        static Timer timer;
 
         public Land()
         {
@@ -41,13 +42,12 @@ namespace Core.Entities
             HarvestableType = harvestableType;
             GrowTime = DateTime.Now;
             playerResources.AssignWorker();
-            DOVirtual.DelayedCall(globalConfig.GetFloat("Worker_ActionTimeSeconds"), () => {
-                Use();
-            });
+            timer = new Timer(Use, null, TimeSpan.FromSeconds(globalConfig.GetFloat("Worker_ActionTimeSeconds")),
+                Timeout.InfiniteTimeSpan);
             Save();
         }
 
-        private void Use()
+        private void Use(object state)
         {
             if (Status != (int)LandStatus.Growing) return;
             var playerResources = GameManager.Instance.PlayerResources;
@@ -64,13 +64,13 @@ namespace Core.Entities
             float growSeconds = globalConfig.GetFloat("Worker_ActionTimeSeconds");
             if (GrowTime.AddSeconds(growSeconds) >= DateTime.Now)
             {
-                Use();
+                Use(null);
             }
             else
             {
-                DOVirtual.DelayedCall((float)(growSeconds - DateTime.Now.Subtract(GrowTime).TotalSeconds), () => {
-                    Use();
-                });
+                timer = new Timer(Use, null,
+                    TimeSpan.FromSeconds((float)(growSeconds - DateTime.Now.Subtract(GrowTime).TotalSeconds)),
+                    Timeout.InfiniteTimeSpan);
             }
         }
 
