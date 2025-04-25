@@ -1,5 +1,5 @@
 ﻿using System;
-using Data.Configs;
+using Core.Manager;
 
 namespace Core.Data
 {

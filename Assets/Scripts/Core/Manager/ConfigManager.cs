@@ -1,6 +1,6 @@
-﻿using Configs;
+﻿using Core.Configs;
 
-namespace Data.Configs
+namespace Core.Manager
 {
     public class ConfigManager
     {
@@ -18,19 +18,19 @@ namespace Data.Configs
         private void LoadAllConfigs()
         {
             GlobalConfig = new GlobalConfig();
-            GlobalConfig.LoadFromResources();
+            GlobalConfig.LoadFromFile();
 
             HarvestableConfig = new HarvestableConfig();
-            HarvestableConfig.LoadFromResources();
+            HarvestableConfig.LoadFromFile();
 
             ProductConfig = new ProductConfig();
-            ProductConfig.LoadFromResources();
+            ProductConfig.LoadFromFile();
 
             SeedAnimalConfig = new SeedAnimalConfig();
-            SeedAnimalConfig.LoadFromResources();
+            SeedAnimalConfig.LoadFromFile();
 
             ShopConfig = new ShopConfig();
-            ShopConfig.LoadFromResources();
+            ShopConfig.LoadFromFile();
         }
     }
 }

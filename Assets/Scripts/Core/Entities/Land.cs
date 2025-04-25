@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Data.Configs;
+using Core.Manager;
 
 namespace Core.Entities
 {
@@ -23,7 +23,8 @@ namespace Core.Entities
         public Land()
         {
             Id = Guid.NewGuid().ToString();
-            Free();
+            HarvestableId = "";
+            Status = (int)LandStatus.Empty;
         }
 
         public void Free()

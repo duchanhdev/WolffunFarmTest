@@ -1,10 +1,11 @@
-﻿using Configs.Base;
+﻿using System.IO;
+using Core.Configs.Base;
 
-namespace Configs
+namespace Core.Configs
 {
     public class SeedAnimalConfig : CsvConfigReader<SeedAnimalConfig.RowData>
     {
-        protected override string FileName => "Configs/SeedAnimalConfig";
+        protected override string FilePath => Path.GetFullPath(@"Assets\Configs\SeedAnimalConfig.csv");
 
         public struct RowData
         {

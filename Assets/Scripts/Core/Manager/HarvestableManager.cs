@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Core.Data;
 using Core.Entities;
 
-namespace Data.Configs
+namespace Core.Manager
 {
     public enum HarvestableEnum
     {

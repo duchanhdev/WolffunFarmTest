@@ -2,7 +2,7 @@
 using Core.Entities;
 using Newtonsoft.Json;
 
-namespace Data.Configs
+namespace Core.Manager
 {
     public class LandManager
     {

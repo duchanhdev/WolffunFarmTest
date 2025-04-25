@@ -1,10 +1,11 @@
-﻿using Configs.Base;
+﻿using System.IO;
+using Core.Configs.Base;
 
-namespace Configs
+namespace Core.Configs
 {
     public class ShopConfig : CsvConfigReader<ShopConfig.RowData>
     {
-        protected override string FileName => "Configs/ShopConfig";
+        protected override string FilePath => Path.GetFullPath(@"Assets\Configs\ShopConfig.csv");
         
         public struct RowData
         {

@@ -1,10 +1,16 @@
-﻿using UnityEngine;
-
-namespace Data.Configs
+﻿namespace Core.Manager
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager
     {
-        public static GameManager Instance { get; private set; }
+        private static GameManager _instance;
+        public static GameManager Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new GameManager();
+                return _instance;
+            }
+        }
 
         public ConfigManager Configs { get; private set; }
         
@@ -14,22 +20,16 @@ namespace Data.Configs
         
         public LandManager LandManager { get; private set; }
 
-        public void Awake()
+        private GameManager()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+        }
 
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
+        public void Init()
+        {
             Configs = new ConfigManager();
             LoadManager();
             ShopManager = new ShopManager();
             UpdateManagerAfterLoad();
-            
         }
 
         public void LoadManager()
@@ -59,9 +59,9 @@ namespace Data.Configs
             return true;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            HarvestableManager.UpdateTimeAll(Time.deltaTime);
+            HarvestableManager.UpdateTimeAll(deltaTime);
         }
     }
 }

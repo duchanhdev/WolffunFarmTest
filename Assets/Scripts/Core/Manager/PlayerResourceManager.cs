@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Configs;
-using Core.Entities;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Data.Configs
+namespace Core.Manager
 { 
      public class PlayerResourceManager
      {

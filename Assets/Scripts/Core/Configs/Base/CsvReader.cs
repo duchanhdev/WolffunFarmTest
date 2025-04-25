@@ -1,25 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
-namespace Configs.Base
+namespace Core.Configs.Base
 {
     public abstract class CsvConfigReader<T> where T : new()
     {
         public List<T> Table { get; protected set; } = new List<T>();
 
-        protected abstract string FileName { get; }
+        protected abstract string FilePath { get; }
 
-        public void LoadFromResources()
+        public void LoadFromFile()
         {
-            TextAsset csvFile = Resources.Load<TextAsset>(FileName);
-            if (csvFile == null)
+            if (!File.Exists(FilePath))
             {
-                Debug.LogError($"[CSV] File not found: {FileName}");
+                Console.WriteLine($"[CSV] File not found: {FilePath}");
                 return;
             }
 
-            using (StringReader reader = new StringReader(csvFile.text))
+            using (var reader = new StreamReader(FilePath))
             {
                 string line;
                 int lineIndex = 0;
@@ -27,7 +26,7 @@ namespace Configs.Base
                 while ((line = reader.ReadLine()) != null)
                 {
                     lineIndex++;
-                    if (lineIndex <= 2) continue; 
+                    if (lineIndex <= 2) continue;
 
                     var values = line.Split(',');
 
@@ -39,5 +38,4 @@ namespace Configs.Base
 
         protected abstract T ParseRow(string[] values);
     }
-
 }

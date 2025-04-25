@@ -1,10 +1,11 @@
-﻿using Configs.Base;
+﻿using System.IO;
+using Core.Configs.Base;
 
-namespace Configs
+namespace Core.Configs
 {
     public class HarvestableConfig : CsvConfigReader<HarvestableConfig.RowData>
     {
-        protected override string FileName => "Configs/HarvestableConfig";
+        protected override string FilePath => Path.GetFullPath(@"Assets\Configs\HarvestableConfig.csv");
         
         
         public struct RowData

@@ -1,7 +1,7 @@
 ﻿using System;
-using Configs;
+using Core.Configs;
 using Core.Data;
-using Data.Configs;
+using Core.Manager;
 
 namespace Core.Entities
 {

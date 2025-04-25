@@ -1,6 +1,7 @@
-﻿using Configs.Base;
+﻿using System.IO;
+using Core.Configs.Base;
 
-namespace Configs
+namespace Core.Configs
 {
     public class GlobalConfig: CsvConfigReader<GlobalConfig.RowData>
     {
@@ -11,7 +12,7 @@ namespace Configs
             public string Value;
         }
         
-        protected override string FileName => "Configs/GlobalConfig";
+        protected override string FilePath => Path.GetFullPath(@"Assets\Configs\GlobalConfig.csv");
         
         public string GetString(string key)
         {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Configs;
+using Core.Configs;
 
-namespace Data.Configs
+namespace Core.Manager
 {
     public class ShopManager
     {
