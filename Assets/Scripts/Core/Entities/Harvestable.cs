@@ -9,7 +9,7 @@ namespace Core.Entities
     {
         protected HarvestableData _data;
         protected HarvestableConfig.RowData _typeData;
-        public int Id => _data.Id;
+        public string Id => _data.Id;
         public int Type => _data.Type;
         public string Name => _typeData.Name;
         public int MaxYield => _typeData.MaxYield;
@@ -18,6 +18,7 @@ namespace Core.Entities
         public float YieldTime => _typeData.YieldTime;
         public float TimeSinceLastYield => _data.TimeSinceLastYield;
         public DateTime LastProduceTime => _data.LastProduceTime;
+        public DateTime GrowTime => _data.GrowTime;
         public bool IsDead => _data.IsDead;
         public DateTime DeathTime => _data.DeathTime;
         public float HarvestWindowDuration => HarvestWindowDuration;
