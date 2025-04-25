@@ -9,13 +9,19 @@ namespace Core.Entities
     {
         protected HarvestableData _data;
         protected HarvestableConfig.RowData _typeData;
+        private GlobalConfig GlobalConfig => GameManager.Instance.Configs.GlobalConfig;
+        private int EquipmentLevel => GameManager.Instance.PlayerResources.EquipmentLevel;
         public string Id => _data.Id;
         public int Type => _data.Type;
         public string Name => _typeData.Name;
         public int MaxYield => _typeData.MaxYield;
         public int ProducedCount => _data.ProducedCount;
         public int PendingProducts => _data.PendingProducts;
-        public float YieldTime => _typeData.YieldTime;
+        public string LandId => _data.LandId;
+
+        public float YieldTime => (float)(_typeData.YieldTime *
+                                          Math.Pow(1 - GlobalConfig.GetFloat("Equipment_UpgradeEffectRate"),
+                                              EquipmentLevel - 1));
         public float TimeSinceLastYield => _data.TimeSinceLastYield;
         public DateTime LastProduceTime => _data.LastProduceTime;
         public DateTime GrowTime => _data.GrowTime;
@@ -60,6 +66,7 @@ namespace Core.Entities
         {
             if (CanHarvest())
             {
+                GameManager.Instance.PlayerResources.AddProduct(_typeData.ProductId, _data.ProducedCount);
                 _data.PendingProducts = 0;
             }
         }

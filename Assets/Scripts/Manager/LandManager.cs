@@ -1,21 +1,25 @@
 ﻿using System.Collections.Generic;
 using Core.Entities;
+using Newtonsoft.Json;
 
 namespace Data.Configs
 {
     public class LandManager
     {
+        public static string FileName = "LandManager";
+        
+        [JsonProperty] 
         public readonly List<Land> Lands = new List<Land>();
         public int TotalLand => Lands.Count;
 
         public LandManager()
         {
-            Lands.Clear();
         }
         
         public void ExpandLand()
         {
             Lands.Add(new Land());
+            Save();
         }
         
         public bool UseLand(string landId, int harvestableType)
@@ -39,6 +43,19 @@ namespace Data.Configs
                 if (landId == Lands[i].Id) return Lands[i];
             }
             return null;
+        }
+
+        public void Save()
+        {
+            SaveLoadManager.Save<LandManager>(this, FileName);
+        }
+
+        public void UpdateAfterLoad()
+        {
+            foreach (var land in Lands)
+            {
+                land.UpdateGrow();
+            }
         }
     }
 }

@@ -1,8 +1,13 @@
 ﻿Key,Value,Description
+
+Worker_First,1,Số lượng công nhân có ban đầu
 Worker_HirePrice,500,Giá thuê mỗi công nhân (đồng vàng)
 Worker_ActionTimeSeconds,120,Thời gian mỗi hành động của công nhân (giây)
 Equipment_UpgradePrice,500,Giá mỗi lần nâng cấp thiết bị (đồng vàng)
 Equipment_UpgradeEffectRate,0.1,Mức tăng năng suất mỗi lần nâng cấp 0.1 = 10%
+Land_First,3,Số lượng mảnh đất có ban đầu
 Land_ExpansionPrice,500,Giá mở rộng mỗi mảnh đất (đồng vàng)
 Game_Goal_Gold,1000000,Mục tiêu vàng để chiến thắng
 LastYield_ExpirationSeconds,3600,Thời gian tồn tại sau lần thu hoạch cuối (giây)
+EquipmentLevel_First,1,Level thiết lập cho trang thiết bị
+SeedAnimal_First,1=10|2=10|4=2,"Thiết lập giống ban đầu, ví dụ 1=10|2=10|4=2 tức là 10 hạt cà chua, 10 hạt việt quất, 2 bò sữa"

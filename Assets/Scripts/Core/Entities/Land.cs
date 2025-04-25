@@ -29,6 +29,7 @@ namespace Core.Entities
         {
             HarvestableId = "";
             Status = (int)LandStatus.Empty;
+            Save();
         }
 
         public void Grow(int harvestableType)
@@ -43,6 +44,7 @@ namespace Core.Entities
             DOVirtual.DelayedCall(globalConfig.GetFloat("Worker_ActionTimeSeconds"), () => {
                 Use();
             });
+            Save();
         }
 
         private void Use()
@@ -52,7 +54,7 @@ namespace Core.Entities
             playerResources.FreeWorker();
             Status = (int)LandStatus.Using;
             HarvestableId = GameManager.Instance.HarvestableManager.CreateHarvestable(HarvestableType, GrowTime, Id).Id;
-
+            Save();
         }
 
         public void UpdateGrow()
@@ -70,6 +72,11 @@ namespace Core.Entities
                     Use();
                 });
             }
+        }
+
+        public void Save()
+        {
+            GameManager.Instance.LandManager.Save();
         }
     }
 }
