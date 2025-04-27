@@ -3,7 +3,7 @@ using Core.Manager;
 
 namespace Core.Data
 {
-    public abstract class HarvestableData
+    public class HarvestableData
     {
         public string Id;
         public int Type;
@@ -11,7 +11,7 @@ namespace Core.Data
         public int PendingProducts;
         public DateTime GrowTime;
         public DateTime LastProduceTime;
-        public float TimeSinceLastYield;
+        public DateTime LastUpdateTime;
         public bool IsDead;
         public DateTime DeathTime;
         public string LandId;
@@ -26,7 +26,7 @@ namespace Core.Data
             PendingProducts = 0;
             GrowTime = growTime;
             LastProduceTime = growTime.AddSeconds(globalConfig.GetFloat("Worker_ActionTimeSeconds"));
-            TimeSinceLastYield = 0;
+            LastUpdateTime = LastProduceTime;
             IsDead = false;
             LandId = landId;
         }

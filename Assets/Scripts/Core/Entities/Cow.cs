@@ -4,7 +4,7 @@ namespace Core.Entities
 {
     public class Cow: Animal
     {
-        public Cow(CowData data) : base(data)
+        public Cow(HarvestableData data) : base(data)
         {
         }
     }

@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 namespace GameUI.Form
 {
-    public class StoreForm:BaseForm
+    public class GrowForm:MonoBehaviour
     {
         [SerializeField]
         private DynamicButton SellBuyButtonPrefab;
         [SerializeField]
         private HorizontalLayoutGroup _horizontalLayoutGroup;
+        [SerializeField]
+        private LandForm _landForm;
+        [SerializeField]
+        private DynamicButton _cancelButton;
         [SerializeField]
         private RectTransform _rectTransformContent;
 
@@ -18,17 +22,17 @@ namespace GameUI.Form
 
         public void Start()
         {
-            var shopConfigTable = GameManager.Instance.Configs.ShopConfig.Table;
-            var seedConfig = GameManager.Instance.Configs.SeedAnimalConfig;
+            var table = GameManager.Instance.Configs.SeedAnimalConfig.Table;
+            _cancelButton.Id = "-1";
+            _cancelButton.AddListener(OnGrowButtonClick);
             _buttons = new List<DynamicButton>();
-            for (int i = 0; i < shopConfigTable.Count; i++)
+            for (int i = 0; i < table.Count; i++)
             {
-                var shopRowData = shopConfigTable[i];
-                var seedRowData = seedConfig.FindById(shopRowData.SeedAnimalId);
+                var rowData = table[i];
                 var button = GameObject.Instantiate(SellBuyButtonPrefab, _horizontalLayoutGroup.transform);
-                button.Id = shopRowData.Id.ToString();
-                button.Text = seedRowData.Name + " giá " + shopRowData.BuyPrice + "V / "+shopRowData.BuyUnit+" đơn vị";
-                button.AddListener(OnBuyButtonClick);
+                button.Id = rowData.Id.ToString();
+                button.Text = rowData.Name;
+                button.AddListener(OnGrowButtonClick);
                 _buttons.Add(button);
             }
             
@@ -38,13 +42,9 @@ namespace GameUI.Form
             _rectTransformContent.sizeDelta = size;
         }
 
-        private void OnBuyButtonClick(string id)
+        private void OnGrowButtonClick(string id)
         {
-            GameManager.Instance.ShopManager.BuySeedAnimal(int.Parse(id));
-        }
-        public override void UpdateUI()
-        {
-            
+              _landForm.Grow(int.Parse(id));
         }
     }
 }

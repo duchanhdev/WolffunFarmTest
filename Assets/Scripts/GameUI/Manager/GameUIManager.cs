@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Core.Manager;
 using GameUI.Form;
 using TMPro;
@@ -15,6 +16,13 @@ namespace GameUI.Manager
         [SerializeField] Button[] _buttons;
         [SerializeField] BaseForm[] _forms;
         private float _timeCounter = 0;
+        public GameManager GameManager { get; private set; }
+
+        private void Awake()
+        {
+            GameManager = GameManager.Instance;
+        }
+
         void Start()
         {
             _timeCounter = 0;

@@ -78,6 +78,12 @@ namespace Core.Manager
         {
             return _seeds.TryGetValue(seedAnimalId, out int count) ? count : 0;
         }
+
+
+        public Dictionary<int, int> GetSeeds()
+        {
+            return _seeds;
+        }
         
         public void AddProduct(int productId, int amount)
         {
@@ -111,6 +117,11 @@ namespace Core.Manager
                 AddGold(GameManager.Instance.Configs.ProductConfig.FindById(productId).SellPrice * amount);
             }
         }
+
+        public Dictionary<int, int> GetProducts()
+        {
+            return _products;
+        }
         
         public bool HireWorker()
         {
@@ -143,12 +154,19 @@ namespace Core.Manager
             Save();
         }
         
-        public void UpgradeEquipment()
+        public bool UpgradeEquipment()
         {
+            var price = GameManager.Instance.Configs.GlobalConfig.GetInt("Equipment_UpgradePrice");
+            if (Gold < price)
+            {
+                return false;
+            }
+            SpendGold(price);
             EquipmentLevel++;
             Save();
+            return true;
         }
-
+        
         public void LoadConfig()
         {
             if (isNotFirstPlay) return;

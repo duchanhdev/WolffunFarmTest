@@ -4,7 +4,7 @@ namespace Core.Entities
 {
     public class Strawberry: Plant
     {
-        public Strawberry(StrawberryData data) : base(data)
+        public Strawberry(HarvestableData data) : base(data)
         {
         }
     }

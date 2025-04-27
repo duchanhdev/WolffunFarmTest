@@ -45,6 +45,17 @@ namespace Core.Manager
             return null;
         }
 
+        public int GetLandEmptyCount()
+        {
+            int count = 0;
+            foreach (var land in Lands)
+            {
+                count += land.Status == (int)Land.LandStatus.Empty ? 1 : 0;
+            }
+
+            return count;
+        }
+
         public void Save()
         {
             SaveLoadManager.Save<LandManager>(this, FileName);
@@ -55,6 +66,21 @@ namespace Core.Manager
             foreach (var land in Lands)
             {
                 land.UpdateGrow();
+            }
+            
+            foreach (var land in Lands)
+            {
+                land.UpdateHarvest();
+            }
+        }
+
+        public void Grow(int type, string landId)
+        {
+            var land = GetLand(landId);
+            if (land == null) land = Lands.Find(l => l.Status == (int)Land.LandStatus.Empty);
+            if (land != null)
+            {
+                land.Grow(type);
             }
         }
     }

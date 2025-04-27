@@ -46,6 +46,7 @@
         public void UpdateManagerAfterLoad()
         {
             PlayerResources.LoadConfig();
+            HarvestableManager.InitAfterLoad();
             LandManager.UpdateAfterLoad();
             HarvestableManager.UpdateAfterLoad();
         }
@@ -65,7 +66,7 @@
 
         public void Update(float deltaTime)
         {
-            HarvestableManager.UpdateTimeAll(deltaTime);
+            HarvestableManager.UpdateTimeNowAll();
         }
     }
 }

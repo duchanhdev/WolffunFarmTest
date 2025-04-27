@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Data;
 using Core.Entities;
+using Newtonsoft.Json;
 
 namespace Core.Manager
 {
@@ -15,56 +16,71 @@ namespace Core.Manager
     public class HarvestableManager
     {
         public static string FileName = "HarvestableManager";
-        public readonly List<Harvestable> Harvestables = new List<Harvestable>();
+        [JsonProperty]
+        private readonly List<HarvestableData> _harvestableDatas = new List<HarvestableData>();
+        
+        private readonly List<Harvestable> _harvestables = new List<Harvestable>();
         public HarvestableManager()
         {
         }
-        public Harvestable CreateHarvestable(int type, DateTime growTime, string landId)
+        public Harvestable CreateHarvestable(int type, DateTime growTime, string landId, HarvestableData data = null)
         {
             Harvestable harvestable = null;
+            if (data == null)
+            {
+                data = new HarvestableData(type, growTime, landId);
+                _harvestableDatas.Add(data);
+            }
+            
             switch (type)
             {
                 case (int)HarvestableEnum.Tomato:
-                    harvestable = new Tomato(new TomatoData(type, growTime, landId));
+                    harvestable = new Tomato(data);
                     break;
                 case (int)HarvestableEnum.Blueberry:
-                    harvestable = new Blueberry(new BlueberryData(type, growTime, landId));
+                    harvestable = new Blueberry(data);
                     break;
                 case (int)HarvestableEnum.Strawberry:
-                    harvestable = new Strawberry(new StrawberryData(type, growTime, landId));
+                    harvestable = new Strawberry(data);
                     break;
                 case (int)HarvestableEnum.Cow:
-                    harvestable = new Cow(new CowData(type, growTime, landId));
+                    harvestable = new Cow(data);
                     break;
                 default:
                     harvestable = null;
                     break;
             }
-            Harvestables.Add(harvestable);
+            _harvestables.Add(harvestable);
             Save();
             return harvestable;
         }
 
-        public void UpdateTimeAll(float delta)
+        public void UpdateTimeNowAll()
         {
-            foreach (Harvestable harvestable in Harvestables)
+            foreach (Harvestable harvestable in _harvestables)
             {
-                harvestable.UpdateTime(delta);
+                harvestable.UpdateTime(DateTime.Now);
+            }
+        }
+
+        public void InitAfterLoad()
+        {
+            foreach (var data in _harvestableDatas)
+            {
+                CreateHarvestable(data.Type, data.GrowTime, data.LandId, data);
             }
         }
 
         public void UpdateAfterLoad()
         {
-            foreach (Harvestable harvestable in Harvestables)
-            {
-                harvestable.UpdateTime((float)DateTime.Now.Subtract(harvestable.GrowTime).TotalSeconds);
-            }
+            UpdateTimeNowAll();
         }
 
         public void RemoveHarvestable(Harvestable harvestable)
         {
-            Harvestables.Remove(harvestable);
-            if (GameManager.Instance.LandManager.GetLand(harvestable.LandId).HarvestableId == harvestable.LandId)
+            _harvestables.Remove(harvestable);
+            _harvestableDatas.RemoveAll(data => data.Id == harvestable.Id);
+            if (GameManager.Instance.LandManager.GetLand(harvestable.LandId).HarvestableId == harvestable.Id)
             {
                 GameManager.Instance.LandManager.FreeLand(harvestable.LandId);
             }
@@ -80,7 +96,7 @@ namespace Core.Manager
 
         public Harvestable GetHarvestable(string harvestableId)
         {
-            return Harvestables.Find(harvestable => harvestable.LandId == harvestableId);
+            return _harvestables.Find(harvestable => harvestable.Id == harvestableId);
         }
 
         public void Save()
