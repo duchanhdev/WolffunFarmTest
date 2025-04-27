@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Core.Manager
@@ -28,6 +29,8 @@ namespace Core.Manager
         
         [JsonProperty]
         public int Goal_Gold { get; private set; }
+        
+        public event Action EndGameEvent;
 
         public PlayerResourceManager()
         {
@@ -196,7 +199,7 @@ namespace Core.Manager
 
         private void EndGame()
         {
-            
+            EndGameEvent?.Invoke();
         }
 
         public void Save()

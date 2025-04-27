@@ -78,7 +78,6 @@ namespace Core.Manager
 
         public void RemoveHarvestable(Harvestable harvestable)
         {
-            _harvestables.Remove(harvestable);
             _harvestableDatas.RemoveAll(data => data.Id == harvestable.Id);
             if (GameManager.Instance.LandManager.GetLand(harvestable.LandId).HarvestableId == harvestable.Id)
             {

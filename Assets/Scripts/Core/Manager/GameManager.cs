@@ -43,6 +43,13 @@
             HarvestableManager = SaveLoadManager.Load<HarvestableManager>(HarvestableManager.FileName);
         }
 
+        public void DeleteManager()
+        {
+            SaveLoadManager.DeleteSave(PlayerResourceManager.FileName);
+            SaveLoadManager.DeleteSave(LandManager.FileName);
+            SaveLoadManager.DeleteSave(HarvestableManager.FileName);
+        }
+
         public void UpdateManagerAfterLoad()
         {
             PlayerResources.LoadConfig();
@@ -64,9 +71,15 @@
             return true;
         }
 
-        public void Update(float deltaTime)
+        public void Update()
         {
             HarvestableManager.UpdateTimeNowAll();
+        }
+
+        public void ResetGame()
+        {
+            DeleteManager();
+            Init();
         }
     }
 }
